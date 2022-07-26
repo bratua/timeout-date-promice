@@ -1,11 +1,16 @@
 import flatpickr from 'flatpickr';
 import 'flatpickr/dist/flatpickr.min.css';
+import Notiflix from 'notiflix';
 import '../css/common.css';
 
 let timerId = null;
 let actionTime = 0;
 let timerIsOn = false;
 const DELAY = 1000;
+const BTN_STATE = {
+  start: 'Start count',
+  stop: 'Stop count',
+};
 
 const options = {
   enableTime: true,
@@ -18,7 +23,8 @@ const options = {
     const currentDate = options.defaultDate.getTime();
 
     if (futureDate < currentDate) {
-      window.alert('Please choose a date in the future');
+      // window.alert('Please choose a date in the future');
+      Notiflix.Notify.failure('Please choose a date in the future');
       return;
     }
 
@@ -40,6 +46,7 @@ const ref = {
 };
 
 ref.startBtn.addEventListener('click', onBtnClick);
+ref.startBtn.textContent = BTN_STATE.start;
 
 flatpickr(ref.inputDateField, options);
 
@@ -56,11 +63,13 @@ function onBtnClick() {
 }
 
 function stopTimer() {
+  ref.startBtn.textContent = BTN_STATE.start;
   clearInterval(timerId);
   setTimer(convertMs(actionTime));
 }
 
 function runTimer() {
+  ref.startBtn.textContent = BTN_STATE.stop;
   timerId = setInterval(decTime, DELAY);
 }
 
