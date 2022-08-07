@@ -1,7 +1,7 @@
 export default class Timer {
   constructor({ setTimerFn }) {
     this.ms = 0;
-    this.delay = 100;
+    this.delay = 1000;
     this.timerIsOn = false;
     this.timerId = null;
     this.setTimerFn = setTimerFn;
